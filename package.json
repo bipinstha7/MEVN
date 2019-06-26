@@ -18,7 +18,10 @@
   },
   "homepage": "https://github.com/bipinstha7/MEVN#readme",
   "dependencies": {
+    "@hapi/joi": "^15.1.0",
+    "argon2": "^0.24.0",
     "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.6.1"
   }
 }
