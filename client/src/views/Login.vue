@@ -1,6 +1,6 @@
 <template>
   <div class="login-form">
-    <form>
+    <form v-on:submit.prevent>
       <h2 class="text-center">Log in</h2>
       <div class="form-group">
         <input
@@ -8,6 +8,7 @@
           class="form-control"
           placeholder="Email"
           required="required"
+          v-model="email"
         />
       </div>
       <div class="form-group">
@@ -16,10 +17,11 @@
           class="form-control"
           placeholder="Password"
           required="required"
+          v-model="password"
         />
       </div>
       <div class="form-group">
-        <button type="submit" class="btn btn-primary btn-block">Log in</button>
+        <button @click="submit" class="btn btn-primary btn-block">Log in</button>
       </div>
       <div class="clearfix">
         <router-link to="/register">Create an Account</router-link>
@@ -29,7 +31,48 @@
 </template>
 
 <script>
-export default {}
+export default {
+  name: 'Login',
+  data() {
+    return {
+      email: '',
+      password: '',
+    }
+  },
+  created(){
+    /* check whether the user is aready logged in */
+    const jwtAuthToken = localStorage.getItem('jwtToken')
+		if (jwtAuthToken) {
+      this.$router.push('/home')
+    } else {
+			this.$router.push('/login')
+		}	
+	},
+  methods: {
+    submit() {
+			if (!this.email || !this.password) {
+				// TODO: show error in UI
+				return
+			}
+      
+      const payload = {
+        email: this.email,
+        password: this.password,
+      }
+
+			this.axios
+				.post(`${this.BASE_URL}/api/v1/users/login`, { payload })
+				.then(res => {
+          localStorage.setItem('jwtToken', res.data.token)
+          this.$router.push({ name: 'home' })
+				})
+				.catch(err => {
+          // TODO: show error UI
+          console.log(err.response.data.message)
+				})
+		},
+  }
+}
 </script>
 
 <style>
