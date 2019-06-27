@@ -27,24 +27,19 @@ class AuthService {
     }
   }
 
-  async signUp(email, password, name) {
+  async register(email, password) {
     const salt = randomBytes(32)
-    const passwordHashed = await argon2.hash(password, { salt })
+    const passwordHashed = await argon2.hash(password)
 
     const userRecord = await this.UserModel.create({
       password: passwordHashed,
       email,
-      salt: salt.toString('hex'),
-      name,
     })
 
     const token = this._generateJWT(userRecord)
 
     return {
-      user: {
-        email: userRecord.email,
-        name: userRecord.name,
-      },
+      email: userRecord.email,
       token,
     }
   }
