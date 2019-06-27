@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home.vue'
+import Table from './views/Table.vue'
 import Login from './views/Login'
 import Register from './views/Register'
 
@@ -12,7 +13,13 @@ const router = new Router({
       path: '/',
       name: 'home',
       component: Home,
-      meta: { requiresAuth: true },
+      // meta: { requiresAuth: true },
+    },
+    {
+      path: '/employees',
+      name: 'employees',
+      component: Table,
+      // meta: { requiresAuth: true },
     },
     {
       path: '/login',
