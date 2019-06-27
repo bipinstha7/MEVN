@@ -61,7 +61,7 @@ export default {
       }
 
 			this.axios
-				.post(`${this.BASE_URL}/api/v1/users/register`, { payload })
+				.post(`${this.BASE_URL}/users/register`, { payload })
 				.then(res => {
           localStorage.setItem('jwtToken', res.data.token)
           this.$router.push({ name: 'home' })
