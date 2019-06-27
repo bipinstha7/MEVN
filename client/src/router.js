@@ -27,9 +27,9 @@ const router = new Router({
   ],
 })
 
-const jwtAuthToken = localStorage.getItem('jwtToken')
 
 router.beforeEach((to, from, next) => {
+  const jwtAuthToken = localStorage.getItem('jwtToken')
   if (to.matched.some(record => record.meta.requiresAuth)) {
     // this route requires auth, check if logged in
     // if not, redirect to login page.
