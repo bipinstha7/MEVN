@@ -11,12 +11,16 @@ class AuthService {
   async login(email, password) {
     const userRecord = await this.UserModel.findOne({ email })
     if (!userRecord) {
-      throw new Error('User not found')
+      const error = new Error('Incorrect email or password')
+      error.statusCode = 400
+      throw error
     }
 
     const correctPassword = await argon2.verify(userRecord.password, password)
     if (!correctPassword) {
-      throw new Error('Incorrect password')
+      const error = new Error('Incorrect email or password')
+      error.statusCode = 400
+      throw error
     }
 
     return {
@@ -28,7 +32,14 @@ class AuthService {
   }
 
   async register(email, password) {
-    const salt = randomBytes(32)
+    const isExists = await this.UserModel.findOne({ email })
+
+    if (isExists) {
+      const error = new Error('User already exists.')
+      error.statusCode = 400
+      throw error
+    }
+
     const passwordHashed = await argon2.hash(password)
 
     const userRecord = await this.UserModel.create({
@@ -44,7 +55,7 @@ class AuthService {
     }
   }
 
-  _generateJWT(token) {
+  _generateJWT(user) {
     return jwt.sign(
       {
         data: {
