@@ -21,7 +21,10 @@ const EmployeeSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  created: {
+  image: {
+    type: String,
+  },
+  imported: {
     type: Date,
     default: Date.now,
   },

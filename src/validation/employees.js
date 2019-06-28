@@ -3,11 +3,22 @@ const Joi = require('@hapi/joi')
 const validateCsvInput = payload => {
   const schema = {
     'Full Name': Joi.string().required(),
-    'Date of Birth': Joi.date()
-      .required(),
-    gender: Joi.string().required,
+    'Date of Birth': Joi.date().required(),
+    gender: Joi.string().required(),
     salary: Joi.number(),
-    designation: Joi.string().required()
+    designation: Joi.string().required(),
+  }
+
+  return Joi.validate(payload, schema)
+}
+
+const validateEmployeeInput = payload => {
+  const schema = {
+    fullName: Joi.string().required(),
+    dob: Joi.date().required(),
+    gender: Joi.string().required(),
+    salary: Joi.number().required(),
+    designation: Joi.string().required(),
   }
 
   return Joi.validate(payload, schema)
@@ -30,5 +41,6 @@ const validateCsvInput = payload => {
 // }
 
 module.exports = {
-    validateCsvInput
+  validateCsvInput,
+  validateEmployeeInput,
 }
