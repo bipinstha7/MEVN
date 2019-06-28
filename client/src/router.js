@@ -4,6 +4,7 @@ import Home from './views/Home.vue'
 import Table from './views/Table.vue'
 import Login from './views/Login'
 import Register from './views/Register'
+import Create from './views/Create'
 
 Vue.use(Router)
 
@@ -13,13 +14,25 @@ const router = new Router({
       path: '/',
       name: 'home',
       component: Home,
-      // meta: { requiresAuth: true },
+      meta: { requiresAuth: true },
     },
     {
       path: '/employees',
       name: 'employees',
       component: Table,
-      // meta: { requiresAuth: true },
+      meta: { requiresAuth: true },
+    },
+    {
+      path: '/employees/create',
+      name: 'CreateEmployees',
+      component: Create,
+      meta: { requiresAuth: true },
+    },
+    {
+      path: '/employees/edit/:id',
+      name: 'EditEmployees',
+      component: Create,
+      meta: { requiresAuth: true },
     },
     {
       path: '/login',
@@ -33,7 +46,6 @@ const router = new Router({
     },
   ],
 })
-
 
 router.beforeEach((to, from, next) => {
   const jwtAuthToken = localStorage.getItem('jwtToken')
