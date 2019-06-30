@@ -21,7 +21,9 @@
         />
       </div>
       <div class="form-group">
-        <button @click="submit" class="btn btn-primary btn-block">Log in</button>
+        <button @click="submit" class="btn btn-primary btn-block">
+          Log in
+        </button>
       </div>
       <div class="clearfix">
         <router-link to="/register">Create an Account</router-link>
@@ -39,39 +41,39 @@ export default {
       password: '',
     }
   },
-  created(){
+  created() {
     /* check whether the user is aready logged in */
     const jwtAuthToken = localStorage.getItem('jwtToken')
-		if (jwtAuthToken) {
+    if (jwtAuthToken) {
       this.$router.push('/home')
     } else {
-			this.$router.push('/login')
-		}	
-	},
+      this.$router.push('/login')
+    }
+  },
   methods: {
     submit() {
-			if (!this.email || !this.password) {
-				// TODO: show error in UI
-				return
-			}
-      
+      if (!this.email || !this.password) {
+        // TODO: show error in UI
+        return
+      }
+
       const payload = {
         email: this.email,
         password: this.password,
       }
 
-			this.axios
-				.post(`${this.BASE_URL}/users/login`, { payload })
-				.then(res => {
+      this.axios
+        .post(`${this.BASE_URL}/users/login`, { payload })
+        .then(res => {
           localStorage.setItem('jwtToken', res.data.token)
           this.$router.push({ name: 'home' })
-				})
-				.catch(err => {
+        })
+        .catch(err => {
           // TODO: show error UI
           console.log(err.response.data.message)
-				})
-		},
-  }
+        })
+    },
+  },
 }
 </script>
 

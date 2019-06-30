@@ -46,7 +46,6 @@ router.post(
 
     const employees = []
 
-    // fs.createReadStream(`./src/uploads/${originalName}`)
     fs.createReadStream(`./src/assets/uploads/${originalName}`)
       .pipe(csv.parse({ headers: true }))
       .on('data', row => {
@@ -119,7 +118,6 @@ if (!fs.existsSync(imageDir)) {
 const imageStorage = multer.diskStorage({
   destination: function(req, file, cb) {
     cb(null, './src/assets/images')
-    // cb(null, './uploads')
   },
   filename: function(req, file, cb) {
     cb(null, file.originalname)

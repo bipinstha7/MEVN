@@ -225,11 +225,8 @@ class AuthService {
           }
 
           if (fs.existsSync(path)) {
-            //console.log('csv file exists - DOT')
             res.send({ url: `/reports/csvs/${documentName}.csv` })
           } else {
-            //console.log('csv file not exits - DOT')
-
             function objectToCsv(data) {
               const csvRows = []
 
@@ -281,7 +278,6 @@ class AuthService {
           }
         } catch (err) {
           next(err)
-          // console.error('error on checking if the csv file exists', err)
         }
       }
     } else {
