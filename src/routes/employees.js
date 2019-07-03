@@ -14,7 +14,6 @@ const {
 const checkLogin = require('../middlewares/auth')
 
 const dir = './src/assets/uploads'
-// const dir = './uploads'
 if (!fs.existsSync(dir)) {
   fs.mkdirSync(dir)
 }
@@ -79,7 +78,6 @@ router.get(
   '/:id',
   checkLogin,
   catchException(async (req, res) => {
-    console.log('dddddddd', req.header('authorization'))
     const employeeServiceInstance = new EmployeeService(EmployeeModel)
     const employee = await employeeServiceInstance.getEmployee(req.params.id)
 
